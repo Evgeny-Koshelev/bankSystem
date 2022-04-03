@@ -9,7 +9,7 @@ import Entities.Client;
 public class GenerationQueueClients extends Thread{
 	
 	
-	private static Logger logger = Logger.getAnonymousLogger();
+	private static Logger logger = Logger.getLogger("ClientLogger");
 	private final int CLIENTS_PER_MINUTE = 5000;
 	private final int SERVICE_TIME = 5000;
 	private final PriorityQueue<Client> clients;
@@ -33,10 +33,10 @@ public class GenerationQueueClients extends Thread{
 	                e.printStackTrace();
 	            }
 			 synchronized (clients){
-				 Random random = new Random();
+				 Random random = new Random(10);
 				 Client client = new Client(random.nextBoolean() ? Operation.PUT_MONEY : Operation.GET_MONEY, random.nextInt(CLIENTS_PER_MINUTE) + 1, random.nextInt(SERVICE_TIME));
 	             clients.add(client);
-	             logger.info("Пришел новый клиент: " + client.hashCode());
+	             logger.info("New client: " + client.hashCode());
 	            }
 	        }
 	    }

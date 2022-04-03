@@ -7,7 +7,7 @@ import Addition.Operation;
 
 public class Operationist extends Thread{
 	
-	private static Logger logger = Logger.getAnonymousLogger();
+	private static Logger logger = Logger.getLogger("OperationistLogger");
     private final PriorityQueue<Client> clients;
     private final CashDesk cashDesk;
     private Client client;
@@ -42,7 +42,7 @@ public class Operationist extends Thread{
         clients.add(newClient);
         if(client == null)
             notify();
-        logger.info("Очередь состоит из: " + clients.size() + " человек");
+        logger.info("The queue includes : " + clients.size() + " people");
     }
 
     private synchronized void startService(){
@@ -57,18 +57,18 @@ public class Operationist extends Thread{
     private void service(){
         synchronized (cashDesk) {
             client = clients.peek();
-            logger.info("Клиента: " + client.hashCode() + " начало обслуживания");
+            logger.info("Start of servicing the: " + client.hashCode() + " client");
             if(client.getOperation() == Operation.PUT_MONEY){
                 cashDesk.putMoney(client.getAmount());
-                logger.info("Внесено: " + client.hashCode());
-                logger.info("Текущий баланс: " + cashDesk.getCash());
+                logger.info("Client: " + client.hashCode() + " added money");
+                logger.info("Balance: " + cashDesk.getCash());
             }
             else if(client.getOperation() == Operation.GET_MONEY){
                 while(!cashDesk.getMoney(client.getAmount())) {
                     clients.poll();
                 }
-                logger.info("Снято: " + client.hashCode());
-                logger.info("Текущий баланс: " + cashDesk.getCash());
+                logger.info("Client: " + client.hashCode() + " got money");
+                logger.info("Balance: " + cashDesk.getCash());
             }
         }
         try {

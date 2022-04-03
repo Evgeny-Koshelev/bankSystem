@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 public class CashDesk {
 	
-	private static Logger logger = Logger.getAnonymousLogger();
+	private static Logger logger = Logger.getLogger("CashDeskLogger");
     private int cash;
     
 	public CashDesk(int cash) {
@@ -23,18 +23,18 @@ public class CashDesk {
 	public void putMoney(int sum){
         if(sum >= 0){
             this.cash += sum;
-            logger.info("Добавлено: " + sum);
+            logger.info("Added: " + sum);
         }
     }
 
     public boolean getMoney(int sum){
         if(this.cash >= sum){
             this.cash -= sum;
-            logger.info("Снято: " + sum);
+            logger.info("Got: " + sum);
             return true;
         }
         else {
-            logger.warning("Средств на счете меньше: " + sum);
+            logger.warning("Error sum > balance: " + sum);
             return false;
         }
     }
