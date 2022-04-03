@@ -27,14 +27,14 @@ public class GenerationQueueClients extends Thread{
 		 Random rnd = new Random();
 		 while(true){
 			 try{
-				 sleep(rnd.nextInt(2000));
+				 sleep(rnd.nextInt(CLIENTS_PER_MINUTE));
 				 
 	            }catch (InterruptedException e) {
 	                e.printStackTrace();
 	            }
 			 synchronized (clients){
-				 Random random = new Random(10);
-				 Client client = new Client(random.nextBoolean() ? Operation.PUT_MONEY : Operation.GET_MONEY, random.nextInt(CLIENTS_PER_MINUTE) + 1, random.nextInt(SERVICE_TIME));
+				 Random random = new Random();
+				 Client client = new Client(random.nextBoolean() ? Operation.PUT_MONEY : Operation.GET_MONEY, random.nextInt(50000), random.nextInt(SERVICE_TIME));
 	             clients.add(client);
 	             logger.info("New client: " + client.hashCode());
 	            }
